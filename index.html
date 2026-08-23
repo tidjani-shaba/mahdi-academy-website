@@ -292,14 +292,16 @@ header.scrolled{box-shadow:0 4px 16px rgba(0,0,0,0.22);}
 .offline-section h2{color:#fff; font-size:clamp(26px,3.6vw,34px); margin-bottom:16px;}
 .offline-section p{color:rgba(255,255,255,0.78); font-size:16px; max-width:460px; margin-bottom:8px;}
 .offline-note{font-size:13.5px; color:rgba(255,255,255,0.6); margin-top:18px;}
-.steps-row{display:flex; align-items:center; gap:10px; flex-wrap:wrap;}
-.step-pill{background:rgba(255,255,255,0.1); border:1px solid rgba(255,255,255,0.18); border-radius:999px; padding:12px 18px; font-size:13.5px; font-weight:600; color:#fff; white-space:nowrap;}
-.step-price{color:rgba(255,255,255,0.65); font-weight:700; margin-left:2px;}
-.step-arrow{color:rgba(255,255,255,0.5);}
-@media(max-width:480px){
-  .steps-row{justify-content:center;}
-  .step-pill{font-size:12.5px; padding:10px 14px;}
+.steps-row{display:grid; grid-template-columns:repeat(3,1fr); gap:12px;}
+@media(max-width:640px){.steps-row{grid-template-columns:1fr;}}
+.step-pill{
+  background:rgba(255,255,255,0.07); border:1px solid rgba(255,255,255,0.16); border-radius:16px;
+  padding:16px 18px; display:flex; flex-direction:column; gap:5px;
 }
+.step-pill.featured{background:rgba(255,255,255,0.14); border-color:rgba(255,255,255,0.32);}
+.step-name{font-size:12px; font-weight:700; color:rgba(255,255,255,0.65); text-transform:uppercase; letter-spacing:.05em;}
+.step-price{font-size:19px; font-weight:800; color:#fff;}
+.step-price small{font-size:12.5px; font-weight:600; color:rgba(255,255,255,0.6); margin-left:3px;}
 
 /* Tarifs */
 .pricing-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:22px; align-items:stretch;}
@@ -653,11 +655,18 @@ footer{background:var(--brand-green); color:rgba(255,255,255,0.78); padding:64px
         <p class="offline-note">Tout le contenu est disponible uniquement sur l'application mobile — télécharge l'application pour y accéder.</p>
       </div>
       <div class="steps-row">
-        <span class="step-pill">Basic <span class="step-price">500 FCFA</span></span>
-        <span class="step-arrow">→</span>
-        <span class="step-pill">Pro <span class="step-price">1 000 FCFA</span></span>
-        <span class="step-arrow">→</span>
-        <span class="step-pill">Pro Max <span class="step-price">5 000 FCFA</span></span>
+        <div class="step-pill">
+          <span class="step-name">Basic</span>
+          <span class="step-price">500 FCFA<small>/mois</small></span>
+        </div>
+        <div class="step-pill featured">
+          <span class="step-name">Pro</span>
+          <span class="step-price">1 000 FCFA<small>/mois</small></span>
+        </div>
+        <div class="step-pill">
+          <span class="step-name">Pro Max</span>
+          <span class="step-price">5 000 FCFA<small>/an</small></span>
+        </div>
       </div>
     </div>
   </div>
