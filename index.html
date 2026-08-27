@@ -2,8 +2,24 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
+<script>(function(){try{var t=localStorage.getItem('mahdi-theme')||'dark';document.documentElement.setAttribute('data-theme',t);}catch(e){document.documentElement.setAttribute('data-theme','dark');}})();</script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Mahdi Academy — Tout ton Bac. Dans une seule application.</title>
+<meta name="description" content="Mahdi Academy, l'application de révision pour le Baccalauréat général au Cameroun (séries A, ABI, C, D). Sujets d'examens officiels et corrigés détaillés en Mathématiques, Physique, Chimie, SVT, Français, Anglais, Histoire, Géographie, Philosophie, Espagnol, Littérature et plus. Télécharge l'application sur Android et iOS.">
+<meta name="keywords" content="Baccalauréat Cameroun, Bac D Mathématiques, Bac C Physique Chimie SVT, Bac A Philosophie, révision bac Cameroun, sujets corrigés bac Cameroun, examens Cameroun, Mahdi Academy">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://mahdi-academy.org/">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="fr_FR">
+<meta property="og:site_name" content="Mahdi Academy">
+<meta property="og:title" content="Mahdi Academy — Tout ton Bac. Dans une seule application.">
+<meta property="og:description" content="Sujets d'examens officiels et corrigés détaillés pour le Baccalauréat général au Cameroun (séries A, ABI, C, D) — toutes les matières, dans une seule application.">
+<meta property="og:url" content="https://mahdi-academy.org/">
+<meta property="og:image" content="https://mahdi-academy.org/logo-small.png">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Mahdi Academy — Tout ton Bac. Dans une seule application.">
+<meta name="twitter:description" content="Sujets d'examens officiels et corrigés détaillés pour le Baccalauréat général au Cameroun (séries A, ABI, C, D) — toutes les matières, dans une seule application.">
+<meta name="twitter:image" content="https://mahdi-academy.org/logo-small.png">
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
 <link rel="alternate icon" type="image/png" href="favicon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -17,7 +33,7 @@
   --green-tint:#E7EFEC;
   --orange:#E06A3B;
   --orange-dark:#C55A2F;
-  --bg:#F8F9FA;
+  --bg:#FFFFFF;
   --surface:#FFFFFF;
   --text:#1E293B;
   --text-2:#64748B;
@@ -393,6 +409,216 @@ footer{background:var(--brand-green); color:rgba(255,255,255,0.78); padding:64px
 }
 :focus-visible{outline:2px solid var(--orange); outline-offset:2px;}
 </style>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "EducationalOrganization",
+      "@id": "https://mahdi-academy.org/#organization",
+      "name": "Mahdi Academy",
+      "url": "https://mahdi-academy.org/",
+      "logo": "https://mahdi-academy.org/logo-small.png",
+      "description": "Mahdi Academy est une application de révision pour le Baccalauréat général au Cameroun (séries A, ABI, C, D), avec des sujets d'examens officiels et des corrigés détaillés par matière.",
+      "areaServed": { "@type": "Country", "name": "Cameroun" }
+    },
+    {
+      "@type": "MobileApplication",
+      "@id": "https://mahdi-academy.org/#app",
+      "name": "Mahdi Academy",
+      "url": "https://mahdi-academy.org/",
+      "operatingSystem": "Android, iOS",
+      "applicationCategory": "EducationApplication",
+      "publisher": { "@id": "https://mahdi-academy.org/#organization" },
+      "description": "Prépare le Baccalauréat général (séries A, ABI, C, D) avec des sujets d'examens officiels et des corrigés détaillés en Mathématiques, Physique, Chimie, SVT, Français, Anglais, Histoire, Géographie, Philosophie, Espagnol et Littérature.",
+      "offers": [
+        { "@type": "Offer", "name": "Basic", "price": "500", "priceCurrency": "XAF" },
+        { "@type": "Offer", "name": "Pro", "price": "1000", "priceCurrency": "XAF" },
+        { "@type": "Offer", "name": "Pro Max", "price": "5000", "priceCurrency": "XAF" }
+      ]
+    },
+    {
+      "@type": "Course", "@id": "https://mahdi-academy.org/#course-mathematiques",
+      "name": "Mathématiques — Baccalauréat Série C, D",
+      "description": "789 questions d'examens officiels du Baccalauréat en Mathématiques, corrigées et expliquées, réparties en 10 chapitres.",
+      "provider": { "@id": "https://mahdi-academy.org/#organization" },
+      "educationalLevel": "Baccalauréat", "inLanguage": "fr"
+    },
+    {
+      "@type": "Course", "@id": "https://mahdi-academy.org/#course-svt",
+      "name": "SVT — Baccalauréat Série C, D",
+      "description": "690 questions d'examens officiels du Baccalauréat en Sciences de la Vie et de la Terre, corrigées et expliquées, réparties en 17 chapitres.",
+      "provider": { "@id": "https://mahdi-academy.org/#organization" },
+      "educationalLevel": "Baccalauréat", "inLanguage": "fr"
+    },
+    {
+      "@type": "Course", "@id": "https://mahdi-academy.org/#course-anglais",
+      "name": "Anglais — Baccalauréat Série A, ABI, C, D",
+      "description": "657 questions d'examens officiels du Baccalauréat en Anglais, corrigées et expliquées, réparties en 8 chapitres.",
+      "provider": { "@id": "https://mahdi-academy.org/#organization" },
+      "educationalLevel": "Baccalauréat", "inLanguage": "fr"
+    },
+    {
+      "@type": "Course", "@id": "https://mahdi-academy.org/#course-physique",
+      "name": "Physique — Baccalauréat Série C, D",
+      "description": "639 questions d'examens officiels du Baccalauréat en Physique, corrigées et expliquées, réparties en 5 chapitres.",
+      "provider": { "@id": "https://mahdi-academy.org/#organization" },
+      "educationalLevel": "Baccalauréat", "inLanguage": "fr"
+    },
+    {
+      "@type": "Course", "@id": "https://mahdi-academy.org/#course-chimie",
+      "name": "Chimie — Baccalauréat Série C, D",
+      "description": "389 questions d'examens officiels du Baccalauréat en Chimie, corrigées et expliquées, réparties en 4 chapitres.",
+      "provider": { "@id": "https://mahdi-academy.org/#organization" },
+      "educationalLevel": "Baccalauréat", "inLanguage": "fr"
+    },
+    {
+      "@type": "Course", "@id": "https://mahdi-academy.org/#course-francais",
+      "name": "Français — Baccalauréat Série A, ABI, C, D",
+      "description": "190 questions d'examens officiels du Baccalauréat en Français, corrigées et expliquées, réparties en 5 chapitres.",
+      "provider": { "@id": "https://mahdi-academy.org/#organization" },
+      "educationalLevel": "Baccalauréat", "inLanguage": "fr"
+    },
+    {
+      "@type": "Course", "@id": "https://mahdi-academy.org/#course-espagnol",
+      "name": "Espagnol — Baccalauréat Série A, ABI",
+      "description": "139 questions d'examens officiels du Baccalauréat en Espagnol, corrigées et expliquées, réparties en 3 chapitres.",
+      "provider": { "@id": "https://mahdi-academy.org/#organization" },
+      "educationalLevel": "Baccalauréat", "inLanguage": "fr"
+    },
+    {
+      "@type": "Course", "@id": "https://mahdi-academy.org/#course-histoire",
+      "name": "Histoire — Baccalauréat Série A, ABI, C, D",
+      "description": "127 questions d'examens officiels du Baccalauréat en Histoire, corrigées et expliquées, réparties en 3 chapitres.",
+      "provider": { "@id": "https://mahdi-academy.org/#organization" },
+      "educationalLevel": "Baccalauréat", "inLanguage": "fr"
+    },
+    {
+      "@type": "Course", "@id": "https://mahdi-academy.org/#course-philosophie",
+      "name": "Philosophie — Baccalauréat Série A, ABI, C, D",
+      "description": "65 questions d'examens officiels du Baccalauréat en Philosophie, corrigées et expliquées, réparties en 5 chapitres.",
+      "provider": { "@id": "https://mahdi-academy.org/#organization" },
+      "educationalLevel": "Baccalauréat", "inLanguage": "fr"
+    },
+    {
+      "@type": "Course", "@id": "https://mahdi-academy.org/#course-geographie",
+      "name": "Géographie — Baccalauréat Série A, ABI, C, D",
+      "description": "65 questions d'examens officiels du Baccalauréat en Géographie, corrigées et expliquées, réparties en 9 chapitres.",
+      "provider": { "@id": "https://mahdi-academy.org/#organization" },
+      "educationalLevel": "Baccalauréat", "inLanguage": "fr"
+    },
+    {
+      "@type": "Course", "@id": "https://mahdi-academy.org/#course-litterature",
+      "name": "Littérature — Baccalauréat Série A, ABI",
+      "description": "39 questions d'examens officiels du Baccalauréat en Littérature, corrigées et expliquées, réparties en 3 chapitres.",
+      "provider": { "@id": "https://mahdi-academy.org/#organization" },
+      "educationalLevel": "Baccalauréat", "inLanguage": "fr"
+    },
+    {
+      "@type": "EducationalOccupationalProgram",
+      "name": "Préparation au Baccalauréat Série A (Littéraire)",
+      "provider": { "@id": "https://mahdi-academy.org/#organization" },
+      "occupationalCategory": "Baccalauréat général, Série A",
+      "hasCourse": [
+        { "@id": "https://mahdi-academy.org/#course-francais" },
+        { "@id": "https://mahdi-academy.org/#course-anglais" },
+        { "@id": "https://mahdi-academy.org/#course-histoire" },
+        { "@id": "https://mahdi-academy.org/#course-geographie" },
+        { "@id": "https://mahdi-academy.org/#course-philosophie" },
+        { "@id": "https://mahdi-academy.org/#course-espagnol" },
+        { "@id": "https://mahdi-academy.org/#course-litterature" }
+      ]
+    },
+    {
+      "@type": "EducationalOccupationalProgram",
+      "name": "Préparation au Baccalauréat Série ABI (Bilingue)",
+      "provider": { "@id": "https://mahdi-academy.org/#organization" },
+      "occupationalCategory": "Baccalauréat général, Série ABI",
+      "hasCourse": [
+        { "@id": "https://mahdi-academy.org/#course-francais" },
+        { "@id": "https://mahdi-academy.org/#course-anglais" },
+        { "@id": "https://mahdi-academy.org/#course-histoire" },
+        { "@id": "https://mahdi-academy.org/#course-geographie" },
+        { "@id": "https://mahdi-academy.org/#course-philosophie" },
+        { "@id": "https://mahdi-academy.org/#course-espagnol" },
+        { "@id": "https://mahdi-academy.org/#course-litterature" }
+      ]
+    },
+    {
+      "@type": "EducationalOccupationalProgram",
+      "name": "Préparation au Baccalauréat Série C (Scientifique)",
+      "provider": { "@id": "https://mahdi-academy.org/#organization" },
+      "occupationalCategory": "Baccalauréat général, Série C",
+      "hasCourse": [
+        { "@id": "https://mahdi-academy.org/#course-francais" },
+        { "@id": "https://mahdi-academy.org/#course-anglais" },
+        { "@id": "https://mahdi-academy.org/#course-histoire" },
+        { "@id": "https://mahdi-academy.org/#course-geographie" },
+        { "@id": "https://mahdi-academy.org/#course-philosophie" },
+        { "@id": "https://mahdi-academy.org/#course-mathematiques" },
+        { "@id": "https://mahdi-academy.org/#course-physique" },
+        { "@id": "https://mahdi-academy.org/#course-chimie" },
+        { "@id": "https://mahdi-academy.org/#course-svt" }
+      ]
+    },
+    {
+      "@type": "EducationalOccupationalProgram",
+      "name": "Préparation au Baccalauréat Série D (Scientifique)",
+      "provider": { "@id": "https://mahdi-academy.org/#organization" },
+      "occupationalCategory": "Baccalauréat général, Série D",
+      "hasCourse": [
+        { "@id": "https://mahdi-academy.org/#course-francais" },
+        { "@id": "https://mahdi-academy.org/#course-anglais" },
+        { "@id": "https://mahdi-academy.org/#course-histoire" },
+        { "@id": "https://mahdi-academy.org/#course-geographie" },
+        { "@id": "https://mahdi-academy.org/#course-philosophie" },
+        { "@id": "https://mahdi-academy.org/#course-mathematiques" },
+        { "@id": "https://mahdi-academy.org/#course-physique" },
+        { "@id": "https://mahdi-academy.org/#course-chimie" },
+        { "@id": "https://mahdi-academy.org/#course-svt" }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://mahdi-academy.org/#faq",
+      "mainEntity": [
+        {
+          "@type": "Question", "name": "Mahdi Academy est destiné à qui ?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Aux élèves préparant le Baccalauréat général dans les séries prises en charge par l'application." }
+        },
+        {
+          "@type": "Question", "name": "Quelles séries sont disponibles ?",
+          "acceptedAnswer": { "@type": "Answer", "text": "A, ABI, C et D." }
+        },
+        {
+          "@type": "Question", "name": "Quelles matières sont disponibles ?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Cela dépend de ta série — consulte la section Matières ci-dessus pour le détail complet." }
+        },
+        {
+          "@type": "Question", "name": "Est-ce que l'application fonctionne sans connexion ?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Avec la formule Basic (500 FCFA), l'application s'utilise uniquement connectée. Avec les formules Pro (1 000 FCFA) et Pro Max (5 000 FCFA), tu peux télécharger tes contenus pour réviser sans connexion." }
+        },
+        {
+          "@type": "Question", "name": "Puis-je utiliser Mahdi Academy sur Android ?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Oui, l'application est disponible sur Google Play." }
+        },
+        {
+          "@type": "Question", "name": "Et sur iPhone ?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Oui, l'application est disponible sur l'App Store." }
+        },
+        {
+          "@type": "Question", "name": "Puis-je changer de série ?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Tu peux mettre à jour ta série depuis ton profil." }
+        },
+        {
+          "@type": "Question", "name": "Comment payer ?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Par Mobile Money (MTN Mobile Money ou Orange Money), directement depuis ton téléphone." }
+        }
+      ]
+    }
+  ]
+}
+</script>
 </head>
 <body>
 
