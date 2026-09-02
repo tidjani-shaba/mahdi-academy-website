@@ -4,28 +4,39 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <meta name="robots" content="noindex, nofollow" />
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="alternate icon" type="image/png" href="/favicon.png">
 <title>Analytics — Mahdi Academy</title>
 <style>
   :root {
     --primary: #133E33;
     --primary-light: #1B8F63;
     --accent: #E06A3B;
-    --bg: #F8F9FA;
+    --bg: #FBFBFA;
     --surface: #FFFFFF;
-    --text: #1E293B;
-    --text-secondary: #56677A;
-    --border: #E5E7EB;
-    --radius: 18px;
-    --shadow: none;
+    --sidebar-bg: #FFFFFF;
+    --text: #171A19;
+    --text-secondary: #6B7573;
+    --text-tertiary: #9CA4A2;
+    --border: #E9EAE8;
+    --nav-active-bg: #EEF3F0;
+    --nav-hover: #F4F5F4;
+    --radius: 10px;
+    --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+    --font-mono: "SFMono-Regular", "Roboto Mono", Menlo, Consolas, monospace;
   }
   @media (prefers-color-scheme: dark) {
     :root {
-      --bg: #14181A;
-      --surface: #1D2325;
-      --text: #F3F5F4;
-      --text-secondary: #9AABA5;
-      --border: #2B3335;
-      --primary-light: #35B583;
+      --bg: #0B0C0C;
+      --surface: #131514;
+      --sidebar-bg: #0B0C0C;
+      --text: #EDEFED;
+      --text-secondary: #8A928F;
+      --text-tertiary: #565D5B;
+      --border: #202322;
+      --nav-active-bg: #16211C;
+      --nav-hover: #171918;
+      --primary-light: #2FA274;
     }
   }
   * { box-sizing: border-box; }
@@ -33,10 +44,11 @@
     margin: 0; padding: 0;
     background: var(--bg);
     color: var(--text);
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    font-family: var(--font-sans);
     -webkit-font-smoothing: antialiased;
+    letter-spacing: -0.006em;
   }
-  #app { max-width: 1120px; margin: 0 auto; padding: 24px 20px 64px; }
+  .mono { font-family: var(--font-mono); font-variant-numeric: tabular-nums; letter-spacing: -0.01em; }
 
   /* ---------- Login ---------- */
   #login-screen {
@@ -52,92 +64,153 @@
     padding: 32px 28px;
     text-align: center;
   }
-  .login-card h1 { font-size: 20px; margin: 0 0 4px; color: var(--primary); }
-  .login-card p { font-size: 13px; color: var(--text-secondary); margin: 0 0 24px; }
+  .login-card h1 { font-size: 18px; font-weight: 650; margin: 0 0 4px; color: var(--text); letter-spacing: -0.01em; }
+  .login-card p { font-size: 12.5px; color: var(--text-secondary); margin: 0 0 22px; }
   .login-card input {
-    width: 100%; padding: 12px 14px; border-radius: 12px;
+    width: 100%; padding: 10px 13px; border-radius: 8px;
     border: 1px solid var(--border); background: var(--bg); color: var(--text);
-    font-size: 15px; margin-bottom: 12px;
+    font-size: 14px; margin-bottom: 10px; font-family: var(--font-mono);
   }
-  .login-card button, .btn {
-    width: 100%; padding: 12px 14px; border-radius: 12px; border: none;
-    background: var(--primary); color: #fff; font-size: 15px; font-weight: 600;
+  .login-card button {
+    width: 100%; padding: 10px 13px; border-radius: 8px; border: none;
+    background: var(--primary-light); color: #fff; font-size: 13.5px; font-weight: 650;
     cursor: pointer;
   }
   .login-card button:disabled { opacity: 0.6; cursor: default; }
   .login-error { color: var(--accent); font-size: 13px; margin-top: 12px; min-height: 16px; }
 
-  /* ---------- Header ---------- */
-  header.dash-header {
-    display: flex; align-items: center; justify-content: space-between;
-    flex-wrap: wrap; gap: 12px; margin-bottom: 24px;
+  /* ---------- Shell: sidebar + content ---------- */
+  #app { display: flex; min-height: 100vh; }
+
+  .sidebar {
+    width: 232px; flex-shrink: 0;
+    background: var(--sidebar-bg); border-right: 1px solid var(--border);
+    display: flex; flex-direction: column;
+    position: sticky; top: 0; height: 100vh;
   }
-  header.dash-header h1 { font-size: 20px; margin: 0; color: var(--primary); }
-  header.dash-header .env-tag {
-    font-size: 11px; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase;
+  .sidebar-brand {
+    padding: 18px 16px 14px; display: flex; align-items: center; gap: 8px;
+  }
+  .sidebar-brand a { color: var(--text); font-weight: 600; font-size: 13.5px; text-decoration: none; }
+  .sidebar-brand a:hover { color: var(--primary-light); }
+  .sidebar-brand .env-tag {
+    font-size: 9.5px; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase;
     color: var(--accent); border: 1px solid var(--accent); border-radius: 999px;
-    padding: 2px 8px; margin-left: 8px; vertical-align: middle;
+    padding: 1.5px 7px; opacity: 0.85;
   }
-  .header-actions { display: flex; align-items: center; gap: 10px; }
+  .sidebar-nav { flex: 1; padding: 6px 10px; overflow-y: auto; }
+  .nav-group { margin-bottom: 14px; }
+  .nav-group-label {
+    font-size: 10.5px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase;
+    color: var(--text-tertiary); padding: 6px 10px 5px; margin: 0;
+  }
+  .nav-item {
+    display: flex; align-items: center; gap: 9px;
+    padding: 7px 10px; border-radius: 7px; border: none; background: transparent;
+    color: var(--text-secondary); font-size: 13px; font-weight: 500; text-align: left;
+    cursor: pointer; width: 100%; line-height: 1.3;
+  }
+  .nav-item svg { width: 15.5px; height: 15.5px; flex-shrink: 0; stroke: currentColor; stroke-width: 1.75; opacity: 0.85; }
+  .nav-item:hover { background: var(--nav-hover); color: var(--text); }
+  .nav-item.active { background: var(--nav-active-bg); color: var(--primary-light); font-weight: 600; }
+  .nav-item.active svg { opacity: 1; }
+  .sidebar-footer { padding: 10px 10px 14px; border-top: 1px solid var(--border); }
+  .logout-btn {
+    width: 100%; border: 1px solid var(--border); background: transparent; color: var(--text-secondary);
+    padding: 7px 10px; border-radius: 7px; font-size: 12.5px; cursor: pointer; font-weight: 500;
+  }
+  .logout-btn:hover { color: var(--text); background: var(--nav-hover); }
+
+  .main-content { flex: 1; min-width: 0; padding: 30px 36px 64px; max-width: 1180px; }
+
+  .page-header {
+    display: flex; align-items: flex-end; justify-content: space-between;
+    flex-wrap: wrap; gap: 12px; margin-bottom: 24px; padding-bottom: 16px;
+    border-bottom: 1px solid var(--border);
+  }
+  .page-header h1 { font-size: 19px; font-weight: 650; margin: 0; color: var(--text); letter-spacing: -0.01em; }
+  .page-header p.page-sub { font-size: 12.5px; color: var(--text-secondary); margin: 4px 0 0; }
+
   .range-select {
-    display: flex; border: 1px solid var(--border); border-radius: 10px; overflow: hidden;
+    display: flex; border: 1px solid var(--border); border-radius: 7px; overflow: hidden; flex-shrink: 0;
   }
   .range-select button {
     border: none; background: var(--surface); color: var(--text-secondary);
-    padding: 7px 14px; font-size: 13px; cursor: pointer; font-weight: 600;
+    padding: 6px 13px; font-size: 12.5px; cursor: pointer; font-weight: 600;
+    font-family: var(--font-mono);
   }
-  .range-select button.active { background: var(--primary); color: #fff; }
-  .logout-btn {
-    border: 1px solid var(--border); background: var(--surface); color: var(--text-secondary);
-    padding: 7px 14px; border-radius: 10px; font-size: 13px; cursor: pointer;
-  }
+  .range-select button + button { border-left: 1px solid var(--border); }
+  .range-select button.active { background: var(--nav-active-bg); color: var(--primary-light); }
 
   /* ---------- KPI grid ---------- */
   .kpi-grid {
     display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-    gap: 12px; margin-bottom: 28px;
+    gap: 1px; margin-bottom: 28px;
+    background: var(--border); border: 1px solid var(--border); border-radius: var(--radius);
+    overflow: hidden;
   }
-  .kpi-tile {
-    background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius);
-    padding: 16px 18px;
+  .kpi-tile { background: var(--surface); padding: 15px 17px; }
+  .kpi-tile .kpi-label { font-size: 11.5px; color: var(--text-secondary); margin-bottom: 8px; }
+  .kpi-tile .kpi-value {
+    font-size: 23px; font-weight: 600; color: var(--text);
+    font-family: var(--font-mono); font-variant-numeric: tabular-nums; letter-spacing: -0.02em;
   }
-  .kpi-tile .kpi-label { font-size: 12px; color: var(--text-secondary); margin-bottom: 6px; }
-  .kpi-tile .kpi-value { font-size: 26px; font-weight: 700; color: var(--text); font-variant-numeric: tabular-nums; }
 
   /* ---------- Chart cards ---------- */
   .chart-grid {
     display: grid; grid-template-columns: repeat(auto-fit, minmax(420px, 1fr));
-    gap: 16px;
+    gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: var(--radius);
+    overflow: hidden;
   }
   .chart-card {
-    background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius);
-    padding: 18px 20px 12px; min-width: 0;
+    background: var(--surface);
+    padding: 17px 20px 14px; min-width: 0;
   }
-  .chart-card h2 { font-size: 14px; font-weight: 700; margin: 0 0 2px; color: var(--text); }
-  .chart-card .chart-sub { font-size: 12px; color: var(--text-secondary); margin: 0 0 12px; }
+  .chart-card h2 { font-size: 12.5px; font-weight: 650; margin: 0 0 2px; color: var(--text); letter-spacing: -0.005em; }
+  .chart-card .chart-sub { font-size: 11.5px; color: var(--text-secondary); margin: 0 0 14px; }
   .chart-card.wide { grid-column: 1 / -1; }
-  .chart-empty { font-size: 13px; color: var(--text-secondary); padding: 24px 0; text-align: center; }
+  .chart-empty { font-size: 12.5px; color: var(--text-tertiary); padding: 24px 0; text-align: center; }
 
   svg.chart-svg { width: 100%; height: auto; overflow: visible; }
   .chart-tooltip {
     position: absolute; pointer-events: none; background: var(--text); color: var(--bg);
-    font-size: 12px; padding: 6px 9px; border-radius: 8px; white-space: nowrap;
+    font-size: 11.5px; font-family: var(--font-mono); padding: 5px 8px; border-radius: 6px; white-space: nowrap;
     transform: translate(-50%, -120%); opacity: 0; transition: opacity 0.08s ease;
     z-index: 5;
   }
   .chart-wrap { position: relative; }
-  .bar-row { display: flex; align-items: center; gap: 10px; padding: 6px 0; }
+  .bar-row { display: flex; align-items: center; gap: 10px; padding: 5px 0; }
   .bar-row .bar-label {
-    width: 42%; font-size: 12.5px; color: var(--text-secondary);
+    width: 42%; font-size: 12px; color: var(--text-secondary);
     overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
   }
-  .bar-row .bar-track { flex: 1; background: var(--bg); border-radius: 4px; height: 10px; position: relative; }
-  .bar-row .bar-fill { position: absolute; left: 0; top: 0; bottom: 0; border-radius: 4px; background: var(--primary-light); }
-  .bar-row .bar-value { width: 44px; text-align: right; font-size: 12.5px; font-variant-numeric: tabular-nums; color: var(--text); }
+  .bar-row .bar-track { flex: 1; background: var(--bg); border-radius: 3px; height: 6px; position: relative; }
+  .bar-row .bar-fill { position: absolute; left: 0; top: 0; bottom: 0; border-radius: 3px; background: var(--primary-light); }
+  .bar-row .bar-value {
+    width: 44px; text-align: right; font-size: 12px; color: var(--text);
+    font-family: var(--font-mono); font-variant-numeric: tabular-nums;
+  }
 
-  footer.dash-footer { text-align: center; font-size: 11.5px; color: var(--text-secondary); margin-top: 32px; }
+  footer.dash-footer { text-align: center; font-size: 11px; color: var(--text-tertiary); margin-top: 32px; }
 
   [hidden] { display: none !important; }
+
+  /* ---------- Mobile: sidebar becomes a top scroll-bar ---------- */
+  @media (max-width: 860px) {
+    #app { flex-direction: column; }
+    .sidebar {
+      width: 100%; height: auto; position: sticky; top: 0; z-index: 10;
+      flex-direction: row; align-items: center; border-right: none; border-bottom: 1px solid var(--border);
+    }
+    .sidebar-brand { padding: 12px 14px; }
+    .sidebar-nav { display: flex; flex-direction: row; overflow-x: auto; padding: 8px; flex: 1; gap: 4px; }
+    .nav-group { display: flex; align-items: center; gap: 2px; margin-bottom: 0; }
+    .nav-group-label { display: none; }
+    .nav-item { white-space: nowrap; }
+    .sidebar-footer { padding: 8px 10px; border-top: none; border-left: 1px solid var(--border); }
+    .logout-btn { width: auto; white-space: nowrap; }
+    .main-content { padding: 20px 16px 48px; }
+  }
 </style>
 </head>
 <body>
@@ -155,71 +228,159 @@
 </div>
 
 <div id="app" hidden>
-  <header class="dash-header">
-    <h1><a href="/" style="color:inherit; text-decoration:none;">Mahdi Academy</a> — Analytics <span class="env-tag">Production</span></h1>
-    <div class="header-actions">
-      <div class="range-select" id="range-select">
-        <button data-days="7">7 j</button>
-        <button data-days="30" class="active">30 j</button>
-        <button data-days="90">90 j</button>
+  <aside class="sidebar">
+    <div class="sidebar-brand">
+      <a href="/">Mahdi Academy</a>
+      <span class="env-tag">Production</span>
+    </div>
+    <nav class="sidebar-nav" id="sidebar-nav">
+      <div class="nav-group">
+        <p class="nav-group-label">Aperçu</p>
+        <button class="nav-item active" data-page="overview">
+          <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="9" rx="1.5"/><rect x="14" y="3" width="7" height="5" rx="1.5"/><rect x="14" y="12" width="7" height="9" rx="1.5"/><rect x="3" y="16" width="7" height="5" rx="1.5"/></svg>
+          <span>Vue d'ensemble</span>
+        </button>
+        <button class="nav-item" data-page="engagement">
+          <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h4l2 8 4-16 2 8h6"/></svg>
+          <span>Engagement</span>
+        </button>
       </div>
+      <div class="nav-group">
+        <p class="nav-group-label">Répartition</p>
+        <button class="nav-item" data-page="subscriptions">
+          <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="2.5"/><path d="M2 10h20"/></svg>
+          <span>Abonnements</span>
+        </button>
+        <button class="nav-item" data-page="users">
+          <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c0-4 3-6.5 6.5-6.5s6.5 2.5 6.5 6.5"/><circle cx="17.5" cy="9" r="2.8"/><path d="M15.8 13.2c2.7.3 4.7 2.6 4.7 5.3"/></svg>
+          <span>Utilisateurs</span>
+        </button>
+        <button class="nav-item" data-page="geography">
+          <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s7-6.5 7-12a7 7 0 1 0-14 0c0 5.5 7 12 7 12z"/><circle cx="12" cy="9" r="2.5"/></svg>
+          <span>Géographie</span>
+        </button>
+      </div>
+    </nav>
+    <div class="sidebar-footer">
       <button class="logout-btn" id="logout-btn">Déconnexion</button>
     </div>
-  </header>
+  </aside>
 
-  <div class="kpi-grid" id="kpi-grid"></div>
+  <main class="main-content">
 
-  <div class="chart-grid">
-    <div class="chart-card wide">
-      <h2>Inscriptions par jour</h2>
-      <p class="chart-sub">Nouveaux comptes créés (profiles.created_at)</p>
-      <div class="chart-wrap" id="chart-signups"></div>
-    </div>
+    <!-- ===== Vue d'ensemble ===== -->
+    <section class="dashboard-page" id="page-overview">
+      <div class="page-header">
+        <div><h1>Vue d'ensemble</h1><p class="page-sub">Indicateurs clés et croissance</p></div>
+        <div class="range-select" data-range-group="days">
+          <button data-days="7">7 j</button>
+          <button data-days="30" class="active">30 j</button>
+          <button data-days="90">90 j</button>
+        </div>
+      </div>
+      <div class="kpi-grid" id="kpi-grid"></div>
+      <div class="chart-grid">
+        <div class="chart-card wide">
+          <h2>Inscriptions par jour</h2>
+          <p class="chart-sub">Nouveaux comptes créés (profiles.created_at)</p>
+          <div class="chart-wrap" id="chart-signups"></div>
+        </div>
+        <div class="chart-card wide">
+          <h2>Utilisateurs actifs par jour</h2>
+          <p class="chart-sub">Utilisateurs distincts ayant généré au moins un événement</p>
+          <div class="chart-wrap" id="chart-active-users"></div>
+        </div>
+      </div>
+    </section>
 
-    <div class="chart-card wide">
-      <h2>Utilisateurs actifs par jour</h2>
-      <p class="chart-sub">Utilisateurs distincts ayant généré au moins un événement</p>
-      <div class="chart-wrap" id="chart-active-users"></div>
-    </div>
+    <!-- ===== Engagement ===== -->
+    <section class="dashboard-page" id="page-engagement" hidden>
+      <div class="page-header">
+        <div><h1>Engagement</h1><p class="page-sub">Événements, écrans, plateformes et streak</p></div>
+        <div class="range-select" data-range-group="days">
+          <button data-days="7">7 j</button>
+          <button data-days="30" class="active">30 j</button>
+          <button data-days="90">90 j</button>
+        </div>
+      </div>
+      <div class="chart-grid">
+        <div class="chart-card wide">
+          <h2>Engagement Streak par jour</h2>
+          <p class="chart-sub">Jours de streak complétés</p>
+          <div class="chart-wrap" id="chart-streak"></div>
+        </div>
+        <div class="chart-card">
+          <h2>Répartition des événements</h2>
+          <p class="chart-sub" id="event-breakdown-sub"></p>
+          <div class="chart-wrap" id="chart-events"></div>
+        </div>
+        <div class="chart-card">
+          <h2>Écrans les plus consultés</h2>
+          <p class="chart-sub" id="screen-breakdown-sub"></p>
+          <div class="chart-wrap" id="chart-screens"></div>
+        </div>
+        <div class="chart-card">
+          <h2>Répartition par plateforme</h2>
+          <p class="chart-sub" id="platform-breakdown-sub"></p>
+          <div class="chart-wrap" id="chart-platform"></div>
+        </div>
+      </div>
+    </section>
 
-    <div class="chart-card">
-      <h2>Répartition des événements</h2>
-      <p class="chart-sub" id="event-breakdown-sub"></p>
-      <div class="chart-wrap" id="chart-events"></div>
-    </div>
+    <!-- ===== Abonnements ===== -->
+    <section class="dashboard-page" id="page-subscriptions" hidden>
+      <div class="page-header">
+        <div><h1>Abonnements</h1><p class="page-sub">Répartition par forfait</p></div>
+      </div>
+      <div class="chart-grid">
+        <div class="chart-card wide">
+          <h2>Répartition par forfait</h2>
+          <p class="chart-sub">Abonnements actifs, tous plans</p>
+          <div class="chart-wrap" id="chart-plans"></div>
+        </div>
+      </div>
+    </section>
 
-    <div class="chart-card">
-      <h2>Écrans les plus consultés</h2>
-      <p class="chart-sub" id="screen-breakdown-sub"></p>
-      <div class="chart-wrap" id="chart-screens"></div>
-    </div>
+    <!-- ===== Utilisateurs ===== -->
+    <section class="dashboard-page" id="page-users" hidden>
+      <div class="page-header">
+        <div><h1>Utilisateurs</h1><p class="page-sub">Répartition par série</p></div>
+      </div>
+      <div class="chart-grid">
+        <div class="chart-card wide">
+          <h2>Répartition par série</h2>
+          <p class="chart-sub">Tous les comptes</p>
+          <div class="chart-wrap" id="chart-series"></div>
+        </div>
+      </div>
+    </section>
 
-    <div class="chart-card">
-      <h2>Répartition par forfait</h2>
-      <p class="chart-sub">Abonnements actifs, tous plans</p>
-      <div class="chart-wrap" id="chart-plans"></div>
-    </div>
+    <!-- ===== Géographie ===== -->
+    <section class="dashboard-page" id="page-geography" hidden>
+      <div class="page-header">
+        <div><h1>Géographie</h1><p class="page-sub">Répartition par région et par ville (localisation IP, non confirmée)</p></div>
+      </div>
+      <div class="chart-grid">
+        <div class="chart-card">
+          <h2>Utilisateurs par région</h2>
+          <p class="chart-sub">Les 10 régions du Cameroun</p>
+          <div class="chart-wrap" id="chart-region-total"></div>
+        </div>
+        <div class="chart-card">
+          <h2>Abonnés actifs par région</h2>
+          <p class="chart-sub">Comptes avec un abonnement actif</p>
+          <div class="chart-wrap" id="chart-region-subscribed"></div>
+        </div>
+        <div class="chart-card wide">
+          <h2>Villes les plus représentées</h2>
+          <p class="chart-sub">Top 15, regroupées par nom normalisé</p>
+          <div class="chart-wrap" id="chart-city"></div>
+        </div>
+      </div>
+    </section>
 
-    <div class="chart-card">
-      <h2>Répartition par série</h2>
-      <p class="chart-sub">Tous les comptes</p>
-      <div class="chart-wrap" id="chart-series"></div>
-    </div>
-
-    <div class="chart-card wide">
-      <h2>Engagement Streak par jour</h2>
-      <p class="chart-sub">Jours de streak complétés</p>
-      <div class="chart-wrap" id="chart-streak"></div>
-    </div>
-
-    <div class="chart-card">
-      <h2>Répartition par plateforme</h2>
-      <p class="chart-sub" id="platform-breakdown-sub"></p>
-      <div class="chart-wrap" id="chart-platform"></div>
-    </div>
-  </div>
-
-  <footer class="dash-footer">Mahdi Academy — tableau de bord interne, ne pas partager.</footer>
+    <footer class="dash-footer">Mahdi Academy — tableau de bord interne, ne pas partager.</footer>
+  </main>
 </div>
 
 <script type="module">
@@ -238,6 +399,8 @@ const loginError = document.getElementById('login-error');
 const loginSubmit = document.getElementById('login-submit');
 
 let currentDays = 30;
+const PAGES = ['overview', 'engagement', 'subscriptions', 'users', 'geography'];
+const loadedPages = new Set();
 
 loginForm.addEventListener('submit', async (e) => {
   e.preventDefault();
@@ -262,11 +425,41 @@ document.getElementById('logout-btn').addEventListener('click', async () => {
   document.getElementById('login-password').value = '';
 });
 
-document.getElementById('range-select').addEventListener('click', (e) => {
-  const btn = e.target.closest('button[data-days]');
+/* ---------- Sidebar navigation ---------- */
+
+document.getElementById('sidebar-nav').addEventListener('click', (e) => {
+  const btn = e.target.closest('.nav-item[data-page]');
+  if (!btn) return;
+  goToPage(btn.dataset.page);
+});
+
+function goToPage(page) {
+  if (!PAGES.includes(page)) page = 'overview';
+  [...document.querySelectorAll('.nav-item[data-page]')].forEach(b => b.classList.toggle('active', b.dataset.page === page));
+  PAGES.forEach(p => {
+    document.getElementById('page-' + p).hidden = p !== page;
+  });
+  history.replaceState(null, '', '#' + page);
+  ensurePageLoaded(page);
+}
+
+function ensurePageLoaded(page) {
+  if (loadedPages.has(page)) return;
+  loadedPages.add(page);
+  if (page === 'overview') { loadSummary(); loadDayCharts(); }
+  if (page === 'engagement') { loadDayCharts(); loadEventBreakdown(); loadScreenBreakdown(); loadPlatformBreakdown(); }
+  if (page === 'subscriptions') { loadPlanBreakdown(); }
+  if (page === 'users') { loadSerieBreakdown(); }
+  if (page === 'geography') { loadRegionBreakdown(); loadCityBreakdown(); }
+}
+
+/* ---------- Range selector (shared across Overview + Engagement) ---------- */
+
+document.addEventListener('click', (e) => {
+  const btn = e.target.closest('.range-select[data-range-group="days"] button[data-days]');
   if (!btn) return;
   currentDays = parseInt(btn.dataset.days, 10);
-  [...document.querySelectorAll('#range-select button')].forEach(b => b.classList.toggle('active', b === btn));
+  [...document.querySelectorAll('.range-select[data-range-group="days"] button')].forEach(b => b.classList.toggle('active', b.dataset.days === btn.dataset.days));
   loadDayCharts();
 });
 
@@ -282,19 +475,8 @@ async function init() {
 function showDashboard() {
   loginScreen.hidden = true;
   app.hidden = false;
-  loadAll();
-}
-
-async function loadAll() {
-  await Promise.all([
-    loadSummary(),
-    loadDayCharts(),
-    loadEventBreakdown(),
-    loadScreenBreakdown(),
-    loadPlanBreakdown(),
-    loadSerieBreakdown(),
-    loadPlatformBreakdown(),
-  ]);
+  const initialPage = (location.hash || '').replace('#', '') || 'overview';
+  goToPage(initialPage);
 }
 
 async function callRpc(name, params = {}, retried = false) {
@@ -344,9 +526,9 @@ async function loadDayCharts() {
     callRpc('analytics_active_users_by_day', { p_days: currentDays }),
     callRpc('analytics_streak_engagement_by_day', { p_days: currentDays }),
   ]);
-  renderLineChart('chart-signups', signups.rows, signups.failed, 'day', 'signups', 'Inscriptions');
-  renderLineChart('chart-active-users', active.rows, active.failed, 'day', 'active_users', 'Actifs');
-  renderLineChart('chart-streak', streak.rows, streak.failed, 'day', 'completed_days', 'Jours complétés');
+  if (document.getElementById('chart-signups')) renderLineChart('chart-signups', signups.rows, signups.failed, 'day', 'signups', 'Inscriptions');
+  if (document.getElementById('chart-active-users')) renderLineChart('chart-active-users', active.rows, active.failed, 'day', 'active_users', 'Actifs');
+  if (document.getElementById('chart-streak')) renderLineChart('chart-streak', streak.rows, streak.failed, 'day', 'completed_days', 'Jours complétés');
 }
 
 async function loadEventBreakdown() {
@@ -375,6 +557,17 @@ async function loadPlatformBreakdown() {
   const { rows, failed } = await callRpc('analytics_platform_breakdown', { p_days: 30 });
   document.getElementById('platform-breakdown-sub').textContent = '30 derniers jours';
   renderBarChart('chart-platform', rows, failed, 'platform', 'event_count');
+}
+
+async function loadRegionBreakdown() {
+  const { rows, failed } = await callRpc('analytics_region_breakdown');
+  renderBarChart('chart-region-total', rows, failed, 'region', 'total_users');
+  renderBarChart('chart-region-subscribed', rows, failed, 'region', 'active_subscribers');
+}
+
+async function loadCityBreakdown() {
+  const { rows, failed } = await callRpc('analytics_city_breakdown', { p_limit: 15 });
+  renderBarChart('chart-city', rows, failed, 'city', 'total_users');
 }
 
 /* ---------- Chart rendering (vanilla SVG, brand-green single hue) ---------- */
@@ -419,16 +612,16 @@ function renderLineChart(containerId, rows, failed, dateKey, valueKey, seriesLab
   svg.innerHTML = `
     <defs>
       <linearGradient id="${gradId}" x1="0" y1="0" x2="0" y2="1">
-        <stop offset="0%" stop-color="#1B8F63" stop-opacity="0.28"/>
-        <stop offset="100%" stop-color="#1B8F63" stop-opacity="0"/>
+        <stop offset="0%" style="stop-color:var(--primary-light)" stop-opacity="0.22"/>
+        <stop offset="100%" style="stop-color:var(--primary-light)" stop-opacity="0"/>
       </linearGradient>
     </defs>
     ${gridY.map(y => `<line x1="${padL}" y1="${y.toFixed(1)}" x2="${W - padR}" y2="${y.toFixed(1)}" stroke="var(--border)" stroke-width="1"/>`).join('')}
     <path d="${areaPath}" fill="url(#${gradId})" stroke="none"/>
-    <path d="${linePath}" fill="none" stroke="#1B8F63" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
-    ${xTicks.map(t => `<text x="${xFor(t.i).toFixed(1)}" y="${H - 8}" font-size="10" fill="var(--text-secondary)" text-anchor="middle">${t.label}</text>`).join('')}
-    <text x="4" y="${padT + 4}" font-size="10" fill="var(--text-secondary)">${maxV}</text>
-    <text x="4" y="${H - padB}" font-size="10" fill="var(--text-secondary)">0</text>
+    <path d="${linePath}" fill="none" style="stroke:var(--primary-light)" stroke-width="1.75" stroke-linejoin="round" stroke-linecap="round"/>
+    ${xTicks.map(t => `<text x="${xFor(t.i).toFixed(1)}" y="${H - 8}" font-size="10" font-family="var(--font-mono)" fill="var(--text-tertiary)" text-anchor="middle">${t.label}</text>`).join('')}
+    <text x="4" y="${padT + 4}" font-size="10" font-family="var(--font-mono)" fill="var(--text-tertiary)">${maxV}</text>
+    <text x="4" y="${H - padB}" font-size="10" font-family="var(--font-mono)" fill="var(--text-tertiary)">0</text>
   `;
 
   const wrap = document.createElement('div');
@@ -440,8 +633,8 @@ function renderLineChart(containerId, rows, failed, dateKey, valueKey, seriesLab
   wrap.appendChild(tooltip);
 
   const hoverDot = document.createElementNS(svgNs, 'circle');
-  hoverDot.setAttribute('r', '4');
-  hoverDot.setAttribute('fill', '#1B8F63');
+  hoverDot.setAttribute('r', '3.5');
+  hoverDot.style.fill = 'var(--primary-light)';
   hoverDot.setAttribute('stroke', 'var(--surface)');
   hoverDot.setAttribute('stroke-width', '2');
   hoverDot.style.opacity = '0';
